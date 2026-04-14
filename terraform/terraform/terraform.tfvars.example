@@ -11,4 +11,4 @@ project_tag          = "peliculas-api"
 mongo_password       = "CambiaEstaPassword123!" # Usa una contraseña segura
 mongo_db_name        = "cartelera"
 rabbitmq_queue       = "peliculas"
-github_repo          = "https://github.com/TU_USUARIO/API-consultar_pelicula.git"
+github_repo          = "https://github.com/juancaFS90/api-de-peliculas.git"

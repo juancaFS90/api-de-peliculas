@@ -58,6 +58,5 @@ variable "rabbitmq_queue" {
 variable "github_repo" {
   description = "URL del repositorio GitHub del proyecto (para clonar en EC2)"
   type        = string
-  # Ejemplo: "https://github.com/tu-usuario/API-consultar_pelicula.git"
-  # Sin default: obligatorio. Cambiar por tu URL real.
+  default     = "https://github.com/juancaFS90/api-de-peliculas.git"
 }
