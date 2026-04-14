@@ -18,7 +18,7 @@ def publish_message(message):
 
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
-    channel.queue_declare(queue=RABBITMQ_QUEUE)
+    channel.queue_declare(queue=RABBITMQ_QUEUE, durable=True)
 
     channel.basic_publish(
         exchange="",
