@@ -4,16 +4,20 @@ import os
 
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "rabbitmq")
 RABBITMQ_PORT = int(os.getenv("RABBITMQ_PORT", "5672"))
-RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE","peliculas")
+RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "peliculas")
+RABBITMQ_USER = os.getenv("RABBITMQ_USER", "guest")
+RABBITMQ_PASSWORD = os.getenv("RABBITMQ_PASSWOR", "guest")
 
 def publish_message(message):
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host= RABBITMQ_HOST,
-                                  port= RABBITMQ_PORT
-                                  )
+    credentials = pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASSWORD)
+    parameters = pika.ConnectionParameters(
+        host=RABBITMQ_HOST,
+        port=RABBITMQ_PORT,
+        credentials=credentials
     )
-    channel = connection.channel()
 
+    connection = pika.BlockingConnection(parameters)
+    channel = connection.channel()
     channel.queue_declare(queue=RABBITMQ_QUEUE)
 
     channel.basic_publish(

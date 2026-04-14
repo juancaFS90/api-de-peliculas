@@ -7,8 +7,8 @@ def process_task(data):
     task_id = data.get("task_id")
     action = data.get("action")
 
-    task_collection.update_one({"task_id": task_id, 
-                                "$set": {"status": "processing"}}
+    task_collection.update_one({"task_id": task_id}, 
+                                {"$set": {"status": "processing"}}
     )
 
     try:
