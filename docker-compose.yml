@@ -1,0 +1,97 @@
+services:
+  api1:
+    build: ./app
+    container_name: flask_api_1
+    environment:
+      INSTANCE_NAME: api1
+      MONGO_USER: admin
+      MONGO_PASSWOR: password123
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DB: "cartelera"
+      MONGO_AUTH_SOURCE: admin
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_QUEUE: peliculas
+
+    depends_on:
+      - rabbitmq
+      - mongodb
+  
+  api2:
+    build: ./app
+    container_name: flask_api_2
+    environment:
+      INSTANCE_NAME: api2
+      MONGO_USER: admin
+      MONGO_PASSWOR: password123
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DB: "cartelera"
+      MONGO_AUTH_SOURCE: admin
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_QUEUE: peliculas
+
+    depends_on:
+      - rabbitmq
+      - mongodb
+
+
+  worker:
+    build: ./app
+    container_name: worker
+    command: python -u -m worker.worker
+    environment:
+      MONGO_USER: admin
+      MONGO_PASSWOR: password123
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DB: "cartelera"
+      MONGO_AUTH_SOURCE: admin
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_QUEUE: peliculas
+
+    depends_on:
+      - rabbitmq
+      - mongodb
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_server
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongoServer
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+  
+  haproxy-master:
+    image: haproxy:latest
+    container_name: haproxy_master
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - api1
+      - api2
+    ports:
+      - "5000:80"
+    
+  haproxy-backup:
+    image: haproxy:latest
+    container_name: haproxy_backup
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - api1
+      - api2
+    ports:
+      - "5001:80"
+

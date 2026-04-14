@@ -1,0 +1,14 @@
+# terraform.tfvars — Valores de variables para tu entorno
+# ⚠️  NO commitear este archivo si contiene contraseñas reales.
+#     Agrega terraform.tfvars a tu .gitignore.
+
+aws_region           = "us-east-1"
+key_name             = "peliculas-key"          # Nombre de tu key pair en AWS
+instance_type        = "t3.micro"               # API y Worker
+instance_type_db     = "t3.small"               # MongoDB necesita más RAM
+instance_type_broker = "t3.micro"               # RabbitMQ
+project_tag          = "peliculas-api"
+mongo_password       = "CambiaEstaPassword123!" # Usa una contraseña segura
+mongo_db_name        = "cartelera"
+rabbitmq_queue       = "peliculas"
+github_repo          = "https://github.com/TU_USUARIO/API-consultar_pelicula.git"
