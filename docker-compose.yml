@@ -13,6 +13,8 @@ services:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_QUEUE: peliculas
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWOR: admin123
 
     depends_on:
       - rabbitmq
@@ -32,6 +34,8 @@ services:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_QUEUE: peliculas
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWOR: admin123
 
     depends_on:
       - rabbitmq
@@ -52,6 +56,8 @@ services:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_QUEUE: peliculas
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWOR: admin123
 
     depends_on:
       - rabbitmq
@@ -63,6 +69,9 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER: admin
+      - RABBITMQ_DEFAULT_PASS: admin123
 
   mongodb:
     image: mongo:latest
