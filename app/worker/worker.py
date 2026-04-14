@@ -42,7 +42,7 @@ def callback(ch, method, properties, body):
 connection=connect_to_rabbit()
 channel=connection.channel()
 
-channel.queue_declare(queue=RABBITMQ_QUEUE)
+channel.queue_declare(queue=RABBITMQ_QUEUE, durable=True)
 
 channel.basic_consume(
     queue=RABBITMQ_QUEUE,
